@@ -5,6 +5,16 @@
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
+    ],
+    "plugins": [
+      [
+        "expo-media-library",
+        {
+          "photosPermission": "Allow GalleryComponent to access your photos.",
+          "savePhotosPermission": "Allow GalleryComponent to save photos.",
+          "isAccessMediaLocationEnabled": true
+        }
+      ]
     ]
   },
   "name": "GalleryComponent"

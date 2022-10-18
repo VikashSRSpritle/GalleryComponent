@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, SectionList, Image, Dimensions, SafeAreaView, TouchableWithoutFeedback, StatusBar } from 'react-native';
 import dayjs from 'dayjs';
 import { useNavigation } from '@react-navigation/native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const JSON_DATA = [
     {
@@ -93,14 +94,14 @@ export default function Gallary() {
     dayjs().format('L LT')
     const navigation = useNavigation()
 
-    const imagePressHandler = (data, index, created) => {
-        navigation.navigate("ImageViewer", { data, index, created })
+    const imagePressHandler = (data, index, imageData) => {
+        navigation.navigate("ImageViewer", { data, index, imageData })
     }
 
     const renderItems = ({ item, section, index }) => {
         return (
             <>
-                <TouchableWithoutFeedback onPress={() => imagePressHandler(DATA, index, section.title)}>
+                <TouchableWithoutFeedback onPress={() => imagePressHandler(JSON_DATA, index, item.iconblob)}>
                     <Image
                         style={styles.imageStyle}
                         source={{ uri: item.iconblob }}
@@ -119,13 +120,20 @@ export default function Gallary() {
     }
     return (
         <SafeAreaView style={styles.container}>
-            <SectionList
-                sections={DATA}
-                keyExtractor={(item, index) => item + index}
-                renderItem={renderItems}
-                contentContainerStyle={styles.sectionStyle}
-                renderSectionHeader={renderHeader}
-            />
+            <View style={{ flex: 0.9 }}>
+                <SectionList
+                    sections={DATA}
+                    keyExtractor={(item, index) => item + index}
+                    renderItem={renderItems}
+                    contentContainerStyle={styles.sectionStyle}
+                    renderSectionHeader={renderHeader}
+                />
+            </View>
+            <View style={{ flex: 0.1, justifyContent: 'center', alignItems: 'center' }}>
+                <TouchableWithoutFeedback onPress={() => navigation.navigate("Album")}>
+                    <Text >Go to Image Upload</Text>
+                </TouchableWithoutFeedback>
+            </View>
         </SafeAreaView>
     );
 }
